@@ -51,6 +51,14 @@ class MoviesController < ApplicationController
 	end 
 
 
+
+
+	def index
+		@movies = Movie.where(["title LIKE ?","%#{params[:search]}%"])
+	end
+
+
+
 	private
 	def movie_params
 		params.require(:movie).permit(:title, :description, :director, :category_id, :movie_img)
