@@ -1,8 +1,10 @@
 class MoviesController < ApplicationController
 	before_action :find_movie, only: [:show,:edit,:update,:destroy]
 	def index
+
 		if params[:category].blank?
-		@movies = Movie.all.order("created_at DESC")
+		#@movies = Movie.all.order("created_at DESC")
+		@movies = Movie.where(["title LIKE ?","%#{params[:search]}%"])
 		else 
 		@category_id = Category.find_by(name: params[:category]).id
 		@movies = Movie.where(:category_id=> @category_id).order("created_at DESC")
@@ -51,11 +53,6 @@ class MoviesController < ApplicationController
 	end 
 
 
-
-
-	def index
-		@movies = Movie.where(["title LIKE ?","%#{params[:search]}%"])
-	end
 
 
 
